@@ -1,7 +1,18 @@
-   const COLUMNS = 16;
+
+
+
+const COLUMNS = 16;
     const ROWS = 16;
     const container = document.getElementById('gridContainer');
+     const resizeBtn = document.getElementById('resizeBtn');
 
+
+
+
+     function createGrid(size) {
+      container.innerHTML = ''; // Clear old grid
+      const totalCells = size * size;
+      const cellSize = 960 / size
     // Optionally show coordinates inside each cell
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLUMNS; c++) {
@@ -23,3 +34,4 @@
         container.appendChild(cell);
       }
     }
+}
