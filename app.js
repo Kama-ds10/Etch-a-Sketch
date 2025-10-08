@@ -35,3 +35,25 @@ const COLUMNS = 16;
       }
     }
 }
+
+// button
+
+resizeBtn.addEventListener('click', () => {
+      let newSize = prompt('Enter the number of squares per side (max 100):');
+      newSize = parseInt(newSize);
+
+      if (isNaN(newSize) || newSize < 1) {
+        alert('Please enter a valid positive number.');
+        return;
+      }
+
+      if (newSize > 100) {
+        alert('Please enter a number 100 or below.');
+        return;
+      }
+
+      createGrid(newSize);
+    });
+
+    // Default grid
+    createGrid(16);
