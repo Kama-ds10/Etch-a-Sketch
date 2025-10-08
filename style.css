@@ -1,0 +1,55 @@
+    /* Layout + container */
+    :root {
+      --columns: 16;
+      --gap: 4px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #fafafa;
+    }
+
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap);
+      width: min(640px, 95vw); /* responsive width */
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      box-sizing: border-box;
+    }
+
+    /* Each cell is a square. aspect-ratio keeps it square.
+       flex-basis uses calc( (100% / columns) - gap adjustments ) */
+    .cell {
+      flex: 0 0 calc((100% / var(--columns)) - (var(--gap) * (var(--columns) - 1) / var(--columns)));
+      aspect-ratio: 1 / 1;
+      box-sizing: border-box;
+      border: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: #444;
+      user-select: none;
+      background: linear-gradient(180deg, #7bf30b, #fbfbfb);
+    }
+
+    /* small hover effect so you can see cells */
+    .cell:hover {
+      background: linear-gradient(180deg, #fffef6, #fff9e6);
+      cursor: pointer;
+    }
+
+    /* optional: ensure no overflow from borders on small screens */
+    @media (max-width: 420px) {
+      .container { padding: 8px; }
+      .cell { font-size: 10px; border-width: 0.8px; }
+    }
