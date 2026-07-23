@@ -1,59 +1,47 @@
+const container = document.getElementById('container');
+const resizeBtn = document.getElementById('resize-btn');
 
+// Main function to build the grid dynamically
+function createGrid(squaresPerSide) {
+    // 1. Clear out any existing grid squares first
+    container.innerHTML = '';
 
+    // 2. Calculate the exact percentage width/height for each square.
+    const squareSizePercentage = 100 / squaresPerSide;
+    const totalSquares = squaresPerSide * squaresPerSide;
 
-const COLUMNS = 16;
-    const ROWS = 16;
-    const container = document.getElementById('gridContainer');
-     const resizeBtn = document.getElementById('resizeBtn');
+    // 3. Generate the elements
+    for (let i = 0; i < totalSquares; i++) {
+        const square = document.createElement('div');
+        square.classList.add('grid-square');
+        
+        // Set the size dynamically using percentage math
+        square.style.flexBasis = `${squareSizePercentage}%`;
+        square.style.height = `${squareSizePercentage}%`;
 
-
-
-
-     function createGrid(size) {
-      container.innerHTML = ''; // Clear old grid
-      const totalCells = size * size;
-      const cellSize = 960 / size
-    // Optionally show coordinates inside each cell
-    for (let r = 0; r < ROWS; r++) {
-      for (let c = 0; c < COLUMNS; c++) {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        // optional text inside each cell (row,col)
-        cell.textContent = `${r + 1},${c + 1}`; 
-
-        // Example: add a click handler to toggle color (optional)
-        cell.addEventListener('click', () => {
-          cell.classList.toggle('active');
-          if (cell.style.backgroundColor === 'lightblue') {
-            cell.style.backgroundColor = '';
-          } else {
-            cell.style.backgroundColor = 'lightblue';
-          }
+        // 4. Add the hover effect using the "mouseenter" event listener
+        square.addEventListener('mouseenter', () => {
+            square.classList.add('active');
         });
 
-        container.appendChild(cell);
-      }
+        container.appendChild(square);
     }
 }
 
-// button
-
+// Button logic to prompt the user for a new size
 resizeBtn.addEventListener('click', () => {
-      let newSize = prompt('Enter the number of squares per side (max 100):');
-      newSize = parseInt(newSize);
+    let userInput = prompt('Enter the number of squares per side (Maximum 100):');
+    
+    // Convert input string to an integer
+    let newSize = parseInt(userInput, 10);
 
-      if (isNaN(newSize) || newSize < 1) {
-        alert('Please enter a valid positive number.');
-        return;
-      }
+    // Validation check: Make sure it's a number, greater than 0, and not exceeding 100
+    if (isNaN(newSize) || newSize <= 0 || newSize > 100) {
+        alert('Please enter a valid number between 1 and 100.');
+    } else {
+        createGrid(newSize);
+    }
+});
 
-      if (newSize > 100) {
-        alert('Please enter a number 100 or below.');
-        return;
-      }
-
-      createGrid(newSize);
-    });
-
-    // Default grid
-    createGrid(16);
+// Initialize the app with the default 16x16 grid on load
+createGrid(16);
